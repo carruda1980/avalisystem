@@ -1,3 +1,4 @@
+
 db.sqlite3
 api/__pycache__/__init__.cpython-36.pyc
 api/__pycache__/models.cpython-36.pyc
@@ -7,3 +8,19 @@ avalisystem/__pycache__/__init__.cpython-36.pyc
 avalisystem/__pycache__/settings.cpython-36.pyc
 avalisystem/__pycache__/urls.cpython-36.pyc
 avalisystem/__pycache__/wsgi.cpython-36.pyc
+__pycache__/
+*.pytest_cache/
+local_settings.py
+*.py[cod]
+*.swp
+*.log
+.DS_Store
+.env
+.venv
+env/
+*.eggs
+*.egg-info
+venv/
+.vscode
+.idea
+.cache/
