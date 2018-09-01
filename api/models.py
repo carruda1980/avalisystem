@@ -1,5 +1,6 @@
+# Third
 from django.db import models
-from cpffield import cpffield
+
 
 class Produto(models.Model):
     """
@@ -13,6 +14,7 @@ class Produto(models.Model):
 
     def __str__(self):
         return self.produto
+
 
 class Voto(models.Model):
     """

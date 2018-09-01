@@ -1,5 +1,9 @@
+# Third
 from django.contrib import admin
+
+# Local
 from .models import Produto, Voto
+
 
 class VotoInLine(admin.TabularInline):
     model = Voto
