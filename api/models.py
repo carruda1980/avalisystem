@@ -9,6 +9,7 @@ class Produto(models.Model):
     produto = models.CharField(max_length=255)
     atualizado_em = models.DateTimeField(null=True)
     cadatrado_em = models.DateTimeField(auto_now_add=True)
+    slug = models.SlugField(max_length=255)
 
     def __str__(self):
         return self.produto
@@ -25,4 +26,4 @@ class Voto(models.Model):
     cadatrado_em = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.nota     
+        return '{} {}'.format(self.produto, self.nota)    
