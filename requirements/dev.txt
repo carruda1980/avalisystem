@@ -5,3 +5,5 @@ ipython
 isort==4.3.4
 flake8==3.5.0
 pylint==2.1.1
+pytest
+model_mommy
