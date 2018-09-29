@@ -18,25 +18,24 @@ from rest_framework.views import APIView
 def index(request):
     return HttpResponse('Bora programar api!!!')
 
-def produto_list(request):
-    """
-    Lista todos os produtos.
-    """
-    if request.method == 'GET':
-        produtos = Produto.objects.all()
-        serializer = ProdutoSerializer(produtos, many=True)
-        return JsonResponse(serializer.data, safe=False)
+class ProdutoList(mixins.ListModelMixin,
+                  generics.GenericAPIView):
+    queryset = Produto.objects.all()
+    serializer_class = ProdutoSerializer
 
-class ProdutoCreate(APIView):
-    """
-    Cria um novo produto.
-    """
-    def post(self, request, format=None):
-        serializer = ProdutoSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+class ProdutoCreate(mixins.CreateModelMixin,
+                  generics.GenericAPIView):
+    queryset = Produto.objects.all()
+    serializer_class = ProdutoSerializer
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 class ProdutoDetail(mixins.RetrieveModelMixin,
                     generics.GenericAPIView):
@@ -59,3 +58,18 @@ class ProdutoDelete(mixins.DestroyModelMixin,
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
+
+class ProdutoUpdate(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Update produto.
+    """
+    queryset = Produto.objects.all()
+    serializer_class = ProdutoSerializer
+
+    def update(self, *args, **kwargs):
+        produto = self.get_object()
+        serializer = ProdutoSerializer(produto, data=self.request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

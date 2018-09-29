@@ -15,6 +15,11 @@ class ProdutoSerializer(serializers.Serializer):
         """
         validated_data.update({'slug': slugify(validated_data['produto'])})
         return Produto.objects.create(**validated_data)
+    
+    def update(self, instance, validated_data):
+        instance.produto = validated_data.get('produto', instance.produto)
+        instance.slug = slugify(validated_data['produto'])
+        return instance
 
 class ProdutoModelSerializer(serializers.ModelSerializer):
     class Meta:
