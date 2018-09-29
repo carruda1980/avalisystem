@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Produto
+from .models import Produto, Voto
 
 from django.utils.text import slugify
 
@@ -25,3 +25,22 @@ class ProdutoModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Produto
         fields = ('id', 'produto',)
+
+
+class VotoSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    nota = serializers.IntegerField(required=True)
+    ponto_positivo = serializers.CharField(max_length=255, required=False)
+    ponto_negativo = serializers.CharField(max_length=255, required=False)
+    produto = serializers.PrimaryKeyRelatedField(queryset=Produto.objects.all(), write_only=True)
+
+    def create(self, validated_data):
+        """
+        Create and return a new `Voto` instance, given the validated data.
+        """
+        return Voto.objects.create(**validated_data)
+
+class VotoModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Voto
+        fields = ('id', 'nota', 'produto', 'ponto_positivo', 'ponto_negativo')
